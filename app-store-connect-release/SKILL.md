@@ -10,7 +10,7 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
 ## Safety Rules
 
 - Always identify the exact target app, version, build, bundle ID, and App Store app ID before editing anything.
-- If `~/.codex/app-store-connect-release/apps.json` exists, read it before asking the user for repeated app metadata. Treat it as private local data: never commit it, paste secrets from it, or echo sensitive fields.
+- If local release config exists, read it before asking the user for repeated metadata. Treat it as private local data: never commit it, paste secrets from it, or echo sensitive fields.
 - Prefer separate task agents when the environment supports it: `Release Operator` agents for edits/uploads and task-specific read-only reviewers before final submission.
 - Use the already-authenticated browser session when possible. If using Safari/Chrome UI automation, call the app-state inspection tool before interacting each turn.
 - Never change `Pricing and Availability`, remove an app from sale, add it back to sale, delete an app, create a new app, change subscription price, or add/remove introductory offers unless the user explicitly asks for that exact change and confirms at action time.
@@ -18,11 +18,15 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
 - If the browser lands on the wrong app, a New App dialog, or another product page, stop and navigate back to the target app before continuing.
 - Do not paste or repeat account passwords, OTPs, API keys, or other secrets in responses.
 
-## Local App Config
+## Local Release Config
 
-- Preferred path: `~/.codex/app-store-connect-release/apps.json`.
-- Use it to resolve known app facts: app display name, App Store app ID, bundle ID, local project path, Xcode project/scheme, API/backend domain, legal URLs, subscription product IDs, default review notes, and default screenshot paths.
-- Do not store Apple account passwords, OTPs, API private keys, session cookies, or payment credentials in this config.
+- Preferred directory: `~/.codex/app-store-connect-release/`.
+- Read `profile.json` first when present. Use it for reusable publisher defaults: company/developer name, default support/marketing URLs, standard EULA URL, common legal/review notes, default screenshot conventions, and standard AI/private-model disclosure.
+- Read `apps.json` next when present. Use it for app-specific facts: app display name, slug, App Store app ID, bundle ID, local project path, Xcode project/scheme, API/backend domain, legal URLs, subscription product IDs, default review notes, and screenshot paths.
+- App-specific values override profile defaults. If profile values contain `{app_slug}`, replace it with the matched app's `slug`.
+- Combine profile-level `default_review_notes` with app-level `default_review_notes` unless the app explicitly sets `replace_profile_review_notes: true`.
+- Use profile-level `review_note_snippets` as reusable named blocks. Only add snippets listed by the app's `review_note_snippets` array or explicitly requested by the user; do not automatically paste AI/private-model disclosures into unrelated apps.
+- Do not store Apple account passwords, OTPs, API private keys, session cookies, or payment credentials in local release config.
 - If multiple entries match, use exact `app_store_id`, then exact `bundle_id`, then exact app name. If still ambiguous, ask the user which app to use.
 - Values discovered live in App Store Connect or Xcode override stale config values. Report mismatches before mutating anything.
 

@@ -1,0 +1,22 @@
+{
+    "publisher": {
+        "company_name": "Your Company LLC",
+        "developer_name": "Your Company LLC",
+        "default_support_url": "https://www.example.com/support",
+        "default_marketing_url": "https://www.example.com/",
+        "default_terms_of_use_url": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
+        "default_privacy_policy_url_pattern": "https://www.example.com/{app_slug}-privacy.html",
+        "default_review_notes": [
+            "No account sign-in is required unless noted for the specific app."
+        ],
+        "review_note_snippets": {
+            "owner_hosted_ai": "AI processing is performed by the developer's own private/local model service. User data is not sent to third-party AI model providers or third-party AI APIs.",
+            "subscription_payments": "The app uses Apple's in-app purchase system for subscription payments when subscriptions are offered.",
+            "legal_links": "The app purchase flow includes functional links to Privacy Policy and Terms of Use."
+        },
+        "default_screenshot_paths": {
+            "iphone_6_5": "screenshots/iphone-6.5",
+            "ipad_12_9": "screenshots/ipad-12.9"
+        }
+    }
+}

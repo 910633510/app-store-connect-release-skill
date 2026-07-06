@@ -28,16 +28,19 @@ cp -R app-store-connect-release ~/.codex/skills/
 
 Restart Codex or start a new session so the skill metadata is loaded.
 
-## Optional Local App Config
+## Optional Local Release Config
 
-You can keep repeated App Store Connect details in a private local config:
+You can keep reusable publisher details in a private local profile, then keep each app's changing facts in a separate app list:
 
 ```sh
 mkdir -p ~/.codex/app-store-connect-release
+cp app-store-connect-profile.example.json ~/.codex/app-store-connect-release/profile.json
 cp app-store-connect-apps.example.json ~/.codex/app-store-connect-release/apps.json
 ```
 
-Edit `~/.codex/app-store-connect-release/apps.json` with your real app IDs, bundle IDs, review-note templates, legal URLs, subscription product IDs, and backend domains. Do not put Apple ID passwords, OTPs, API keys, or App Store Connect API private keys in this file.
+Edit `~/.codex/app-store-connect-release/profile.json` with reusable information such as company name, default support/marketing URLs, standard EULA URL, common App Review notes, and reusable App Review note snippets such as owner-hosted AI or subscription payment disclosures. Edit `~/.codex/app-store-connect-release/apps.json` with app-specific IDs, bundle IDs, local project paths, subscription product IDs, screenshots, legal URLs, backend domains, and the snippet names that apply to that app.
+
+Do not put Apple ID passwords, OTPs, API keys, App Store Connect API private keys, session cookies, or payment credentials in either file.
 
 ## What It Covers
 
