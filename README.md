@@ -1,5 +1,7 @@
 # App Store Connect Release Skill
 
+一键发布你的应用，避开所有审核坑。
+
 A Codex skill for preparing and submitting iOS apps in App Store Connect with fewer release-day mistakes.
 
 It is designed for workflows that involve:
