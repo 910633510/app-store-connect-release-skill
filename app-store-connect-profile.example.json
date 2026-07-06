@@ -6,6 +6,18 @@
         "default_marketing_url": "https://www.example.com/",
         "default_terms_of_use_url": "https://www.apple.com/legal/internet-services/itunes/dev/stdeula/",
         "default_privacy_policy_url_pattern": "https://www.example.com/{app_slug}-privacy.html",
+        "default_aso_markets": [
+            "United States"
+        ],
+        "default_aso_locales": [
+            "en-US"
+        ],
+        "default_aso_sources": [
+            "https://developer.apple.com/app-store/product-page/",
+            "https://developer.apple.com/app-store/search/",
+            "https://ads.apple.com/app-store/best-practices/keywords",
+            "https://developer.apple.com/app-store/custom-product-pages/"
+        ],
         "default_review_notes": [
             "No account sign-in is required unless noted for the specific app."
         ],

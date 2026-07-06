@@ -1,6 +1,6 @@
 ---
 name: app-store-connect-release
-description: Use when preparing, updating, reviewing, or submitting an iOS app in App Store Connect, including metadata, screenshots, app icons, subscription copy, App Review notes, build selection, export compliance, and final submission. Especially useful for XM LLC apps and AI apps that need task-specific operator/reviewer agent roles and review notes explaining owner-hosted/local AI processing rather than third-party AI services.
+description: Use when preparing, updating, reviewing, or submitting an iOS app in App Store Connect, including metadata, ASO keyword research, screenshots, app icons, subscription copy, App Review notes, build selection, export compliance, and final submission. Especially useful for XM LLC apps and AI apps that need task-specific operator/reviewer agent roles and owner-hosted/local AI review notes.
 ---
 
 # App Store Connect Release
@@ -35,7 +35,8 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
 
 - Split the release into task lanes. Each lane has an Operator, a read-only Reviewer, and a written pass/block result.
 - **Target & Build**: Operator selects the app/version/build. `Build Reviewer` verifies app name, App Store app ID, bundle ID, marketing version, build number, selected build, and export compliance state.
-- **Metadata Copy**: Operator edits Promotional Text, Description, What's New, keywords, support/marketing URLs, and review notes. `Metadata Reviewer` checks grammar, product claims, stale trial copy, legal links, and consistency with the actual app behavior.
+- **ASO Research**: Operator performs current web research before metadata edits. `ASO Reviewer` checks sources, keyword relevance, competitor/trademark risk, localization assumptions, and whether screenshot copy targets conversion rather than keyword stuffing.
+- **Metadata Copy**: Operator edits Promotional Text, Description, What's New, keywords, support/marketing URLs, and review notes using the ASO brief. `Metadata Reviewer` checks grammar, product claims, stale trial copy, legal links, ASO consistency, and actual app behavior.
 - **Assets**: Operator uploads screenshots and app icon assets. `Asset Reviewer` checks screenshot counts/dimensions, removes stale screenshots, and verifies App Icon source images are full-bleed square with no pre-rounded corners, internal frame, or border.
 - **Subscription & Legal**: Operator checks product IDs, price copy, renewal copy, Privacy Policy, and Terms of Use. `Subscription Legal Reviewer` checks that trial/introductory-offer claims match App Store Connect and that required links are visible.
 - **AI & Privacy**: Operator writes AI-processing and privacy notes. `AI Privacy Reviewer` verifies owner-hosted/private AI claims, backend domains, data-retention claims, and confirms no third-party AI-service claim is made unless true.
@@ -65,9 +66,18 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
        | rg -i "3-day|3 day|try 3|free trial|trial|试用|introductory" || true
      ```
 
-3. **Metadata, icons, and screenshots**
+3. **ASO web research**
+   - Before changing App Store metadata or screenshots, search the web for current ASO guidance and the app's competitive space unless the user explicitly asks to skip ASO.
+   - Prefer official Apple sources first: App Store product page guidance, App Store search guidance, Apple Ads keyword best practices, and Custom Product Pages. Add recent reputable ASO sources only for trend/market context.
+   - Search the app category, core use cases, likely user queries, competitor App Store pages, and current screenshot/positioning patterns for the target market and localizations from `profile.json` when available.
+   - Produce a short ASO brief before editing: target market/locales, 10-20 candidate keywords grouped by intent, proposed 100-character keyword field, title/subtitle ideas, screenshot-first-three narrative, competitor terms to avoid, localization/custom product page opportunities, and source URLs with dates.
+   - Do not use competitor app names, unauthorized trademarks, celebrity names, irrelevant trending terms, offensive terms, or generic keyword stuffing in metadata. Do not claim ranking facts without a source.
+
+4. **Metadata, icons, and screenshots**
    - Subscription copy should be concise and professional: state the free limit, Pro limit, price, renewal nature if relevant, and link to Privacy Policy and Terms of Use.
    - If free trial has been canceled, remove all trial claims from app UI, StoreKit config, screenshots, Promotional Text, What's New, Description, Review Notes, and subscription offers.
+   - For App Store keywords, keep within 100 characters, separate terms with commas and no spaces, avoid duplicates/plurals/category terms/filler words, and do not repeat words already in the app name or subtitle.
+   - Align the first one to three screenshots with the ASO brief because they appear in search results when no app preview is shown.
    - App Icon assets must be full-bleed square images with no pre-rounded corners, no internal rounded-square frame, and no visible border. Xcode/App Store/iOS apply the final rounded-corner mask automatically.
    - If generated icon artwork already includes rounded corners or a border, regenerate or edit the source PNGs so the artwork fills the full square canvas.
    - For screenshots, verify dimensions before upload. Common App Store sizes:
@@ -75,7 +85,7 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
      - iPad 12.9": `2048 x 2732`
    - After replacing screenshots, verify the old screenshots are gone and each required device family has at least one valid screenshot.
 
-4. **AI App Review Notes**
+5. **AI App Review Notes**
    - For AI apps using owner-hosted/local/private models, include this note only when true:
      ```text
      AI processing is performed by XM LLC's own private/local model service. User audio is not sent to third-party AI model providers or third-party AI APIs. The app uses Apple's in-app purchase system for subscription payments.
@@ -90,9 +100,9 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
      ```
    - Do not claim “local/private AI” if the app actually calls third-party model APIs.
 
-5. **Submit and verify**
+6. **Submit and verify**
    - Click `Add for Review` only after metadata, app icon, screenshots, selected build, legal links, and review notes are correct.
-   - Run all task-specific reviewer passes after `Add for Review` but before final `Submit for Review`.
+   - Run all task-specific reviewer passes after `Add for Review` but before final `Submit for Review`, including `ASO Reviewer` when metadata or screenshots changed.
    - Before clicking `Submit for Review`, ask for immediate confirmation: “最后一步会正式提交给 Apple 审核。请确认现在提交吗？”
    - After submission, verify status changes to `Waiting for Review` and capture the key facts: app, version, build, submission result, and any review submission link or ID shown.
 

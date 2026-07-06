@@ -7,6 +7,7 @@ A Codex skill for preparing and submitting iOS apps in App Store Connect with fe
 It is designed for workflows that involve:
 
 - App Store metadata updates
+- web-researched ASO keyword and conversion strategy
 - app icon checks
 - screenshot replacement
 - subscription copy review
@@ -47,6 +48,7 @@ Do not put Apple ID passwords, OTPs, API keys, App Store Connect API private key
 
 - Identifying the exact app, version, build, bundle ID, and App Store app ID before editing.
 - Checking for stale free-trial or introductory-offer copy before submission.
+- Running current web research for App Store Optimization (ASO), including keywords, competitors, screenshot messaging, localization, and custom product page opportunities.
 - Checking that App Icon assets are full-bleed square images with no pre-rounded corners, internal frame, or border. Xcode and iOS apply the rounded mask.
 - Replacing App Store screenshots while validating common required dimensions.
 - Filling App Review notes with privacy, legal, subscription, and AI-processing context.
