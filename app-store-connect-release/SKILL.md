@@ -36,9 +36,11 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
        | rg -i "3-day|3 day|try 3|free trial|trial|试用|introductory" || true
      ```
 
-3. **Metadata and screenshots**
+3. **Metadata, icons, and screenshots**
    - Subscription copy should be concise and professional: state the free limit, Pro limit, price, renewal nature if relevant, and link to Privacy Policy and Terms of Use.
    - If free trial has been canceled, remove all trial claims from app UI, StoreKit config, screenshots, Promotional Text, What's New, Description, Review Notes, and subscription offers.
+   - App Icon assets must be full-bleed square images with no pre-rounded corners, no internal rounded-square frame, and no visible border. Xcode/App Store/iOS apply the final rounded-corner mask automatically.
+   - If generated icon artwork already includes rounded corners or a border, regenerate or edit the source PNGs so the artwork fills the full square canvas.
    - For screenshots, verify dimensions before upload. Common App Store sizes:
      - iPhone 6.5": `1242 x 2688`
      - iPad 12.9": `2048 x 2732`
@@ -60,7 +62,7 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
    - Do not claim “local/private AI” if the app actually calls third-party model APIs.
 
 5. **Submit and verify**
-   - Click `Add for Review` only after metadata, screenshots, selected build, legal links, and review notes are correct.
+   - Click `Add for Review` only after metadata, app icon, screenshots, selected build, legal links, and review notes are correct.
    - Before clicking `Submit for Review`, ask for immediate confirmation: “最后一步会正式提交给 Apple 审核。请确认现在提交吗？”
    - After submission, verify status changes to `Waiting for Review` and capture the key facts: app, version, build, submission result, and any review submission link or ID shown.
 
