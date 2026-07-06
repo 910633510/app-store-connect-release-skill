@@ -10,12 +10,21 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
 ## Safety Rules
 
 - Always identify the exact target app, version, build, bundle ID, and App Store app ID before editing anything.
+- If `~/.codex/app-store-connect-release/apps.json` exists, read it before asking the user for repeated app metadata. Treat it as private local data: never commit it, paste secrets from it, or echo sensitive fields.
 - Prefer separate task agents when the environment supports it: `Release Operator` agents for edits/uploads and task-specific read-only reviewers before final submission.
 - Use the already-authenticated browser session when possible. If using Safari/Chrome UI automation, call the app-state inspection tool before interacting each turn.
 - Never change `Pricing and Availability`, remove an app from sale, add it back to sale, delete an app, create a new app, change subscription price, or add/remove introductory offers unless the user explicitly asks for that exact change and confirms at action time.
 - Final `Submit for Review` always requires action-time confirmation, even if the user said “no need to confirm” earlier.
 - If the browser lands on the wrong app, a New App dialog, or another product page, stop and navigate back to the target app before continuing.
 - Do not paste or repeat account passwords, OTPs, API keys, or other secrets in responses.
+
+## Local App Config
+
+- Preferred path: `~/.codex/app-store-connect-release/apps.json`.
+- Use it to resolve known app facts: app display name, App Store app ID, bundle ID, local project path, Xcode project/scheme, API/backend domain, legal URLs, subscription product IDs, default review notes, and default screenshot paths.
+- Do not store Apple account passwords, OTPs, API private keys, session cookies, or payment credentials in this config.
+- If multiple entries match, use exact `app_store_id`, then exact `bundle_id`, then exact app name. If still ambiguous, ask the user which app to use.
+- Values discovered live in App Store Connect or Xcode override stale config values. Report mismatches before mutating anything.
 
 ## Task-Based Agent Workflow
 
@@ -33,6 +42,7 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
 ## Standard Workflow
 
 1. **Ground the target**
+   - Read local app config if present, then confirm live App Store Connect/Xcode facts against it.
    - Confirm target app name, App Store app ID, bundle ID, local project path, marketing version, build number, and selected build.
    - Inspect current App Store Connect state before acting: `Prepare for Submission`, `Ready for Review`, `Waiting for Review`, rejected, or removed from sale.
    - Treat “Removed from App Store” as an existing availability state unless the user specifically asks to change availability.
