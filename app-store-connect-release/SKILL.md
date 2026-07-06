@@ -21,8 +21,9 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
 ## Local Release Config
 
 - Preferred directory: `~/.codex/app-store-connect-release/`.
-- Read `profile.json` first when present. Use it for reusable publisher defaults: company/developer name, default support/marketing URLs, standard EULA URL, common legal/review notes, default screenshot conventions, and standard AI/private-model disclosure.
-- Read `apps.json` next when present. Use it for app-specific facts: app display name, slug, App Store app ID, bundle ID, local project path, Xcode project/scheme, API/backend domain, legal URLs, subscription product IDs, default review notes, and screenshot paths.
+- `profile.json` is the only manually required local config. Read it first when present. Use it for reusable publisher defaults: company/developer name, default support/marketing URLs, standard EULA URL, common legal/review notes, default screenshot conventions, and standard AI/private-model disclosure snippets.
+- `apps.json` is optional generated cache, not required setup. If absent, discover app-specific facts from the user's request, local Xcode project, and live App Store Connect state.
+- When exact app facts are confirmed, you may create or update `apps.json` with non-secret app-specific facts: app display name, slug, App Store app ID, bundle ID, local project path, Xcode project/scheme, API/backend domain, legal URLs, subscription product IDs, default review notes, selected reusable snippet names, and screenshot paths.
 - App-specific values override profile defaults. If profile values contain `{app_slug}`, replace it with the matched app's `slug`.
 - Combine profile-level `default_review_notes` with app-level `default_review_notes` unless the app explicitly sets `replace_profile_review_notes: true`.
 - Use profile-level `review_note_snippets` as reusable named blocks. Only add snippets listed by the app's `review_note_snippets` array or explicitly requested by the user; do not automatically paste AI/private-model disclosures into unrelated apps.
@@ -46,7 +47,7 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
 ## Standard Workflow
 
 1. **Ground the target**
-   - Read local app config if present, then confirm live App Store Connect/Xcode facts against it.
+   - Read local release profile if present, then confirm live App Store Connect/Xcode facts. Use optional app cache only when it already exists or after exact app facts have been confirmed.
    - Confirm target app name, App Store app ID, bundle ID, local project path, marketing version, build number, and selected build.
    - Inspect current App Store Connect state before acting: `Prepare for Submission`, `Ready for Review`, `Waiting for Review`, rejected, or removed from sale.
    - Treat “Removed from App Store” as an existing availability state unless the user specifically asks to change availability.

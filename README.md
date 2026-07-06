@@ -30,17 +30,18 @@ Restart Codex or start a new session so the skill metadata is loaded.
 
 ## Optional Local Release Config
 
-You can keep reusable publisher details in a private local profile, then keep each app's changing facts in a separate app list:
+You can keep reusable publisher details in a private local profile. This is the only file you need to create manually:
 
 ```sh
 mkdir -p ~/.codex/app-store-connect-release
 cp app-store-connect-profile.example.json ~/.codex/app-store-connect-release/profile.json
-cp app-store-connect-apps.example.json ~/.codex/app-store-connect-release/apps.json
 ```
 
-Edit `~/.codex/app-store-connect-release/profile.json` with reusable information such as company name, default support/marketing URLs, standard EULA URL, common App Review notes, and reusable App Review note snippets such as owner-hosted AI or subscription payment disclosures. Edit `~/.codex/app-store-connect-release/apps.json` with app-specific IDs, bundle IDs, local project paths, subscription product IDs, screenshots, legal URLs, backend domains, and the snippet names that apply to that app.
+Edit `~/.codex/app-store-connect-release/profile.json` with reusable information such as company name, default support/marketing URLs, standard EULA URL, common App Review notes, and reusable App Review note snippets such as owner-hosted AI or subscription payment disclosures.
 
-Do not put Apple ID passwords, OTPs, API keys, App Store Connect API private keys, session cookies, or payment credentials in either file.
+`~/.codex/app-store-connect-release/apps.json` is optional. Do not maintain it by hand unless you want to. During a release, the skill can discover app-specific facts from Xcode and App Store Connect, then create or update `apps.json` as a local cache for future releases.
+
+Do not put Apple ID passwords, OTPs, API keys, App Store Connect API private keys, session cookies, or payment credentials in any local release config file.
 
 ## What It Covers
 
