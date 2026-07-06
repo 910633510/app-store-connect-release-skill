@@ -1,6 +1,6 @@
 ---
 name: app-store-connect-release
-description: Use when preparing, updating, reviewing, or submitting an iOS app in App Store Connect, including metadata, screenshots, app icons, subscription copy, App Review notes, build selection, export compliance, and final submission. Especially useful for XM LLC apps and AI apps that need separate operator/reviewer agent roles and review notes explaining owner-hosted/local AI processing rather than third-party AI services.
+description: Use when preparing, updating, reviewing, or submitting an iOS app in App Store Connect, including metadata, screenshots, app icons, subscription copy, App Review notes, build selection, export compliance, and final submission. Especially useful for XM LLC apps and AI apps that need task-specific operator/reviewer agent roles and review notes explaining owner-hosted/local AI processing rather than third-party AI services.
 ---
 
 # App Store Connect Release
@@ -10,21 +10,25 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
 ## Safety Rules
 
 - Always identify the exact target app, version, build, bundle ID, and App Store app ID before editing anything.
-- Prefer two separate agents when the environment supports it: one `Release Operator` for edits/uploads, and one `Release Reviewer` for read-only QA before final submission.
+- Prefer separate task agents when the environment supports it: `Release Operator` agents for edits/uploads and task-specific read-only reviewers before final submission.
 - Use the already-authenticated browser session when possible. If using Safari/Chrome UI automation, call the app-state inspection tool before interacting each turn.
 - Never change `Pricing and Availability`, remove an app from sale, add it back to sale, delete an app, create a new app, change subscription price, or add/remove introductory offers unless the user explicitly asks for that exact change and confirms at action time.
 - Final `Submit for Review` always requires action-time confirmation, even if the user said “no need to confirm” earlier.
 - If the browser lands on the wrong app, a New App dialog, or another product page, stop and navigate back to the target app before continuing.
 - Do not paste or repeat account passwords, OTPs, API keys, or other secrets in responses.
 
-## Two-Agent Workflow
+## Task-Based Agent Workflow
 
-- **Release Operator**: performs the actual App Store Connect work: metadata edits, screenshot uploads, build selection, export compliance, `Add for Review`, and final submission after user confirmation.
-- **Release Reviewer**: performs a read-only review after Operator finishes edits and before final `Submit for Review`. The Reviewer must not click buttons, upload files, edit metadata, change availability, or submit.
-- If multi-agent tools are unavailable, simulate the split with two explicit passes: first an Operator pass, then a separate Reviewer pass with fresh checks and no mutating actions.
-- Operator must hand Reviewer a short release packet: app name, App Store app ID, version/build, bundle ID, selected build, screenshots replaced, subscription/trial status, App Review notes, legal URLs, and anything intentionally not changed.
-- Reviewer must check target app identity, sale availability state, stale trial copy, app icon full-bleed/no-border rule, screenshot counts/dimensions, subscription copy, legal links, AI-processing claims, selected build, and review notes.
-- Operator can proceed to final submission only after Reviewer reports no blocking issues. Final `Submit for Review` still needs immediate user confirmation.
+- Split the release into task lanes. Each lane has an Operator, a read-only Reviewer, and a written pass/block result.
+- **Target & Build**: Operator selects the app/version/build. `Build Reviewer` verifies app name, App Store app ID, bundle ID, marketing version, build number, selected build, and export compliance state.
+- **Metadata Copy**: Operator edits Promotional Text, Description, What's New, keywords, support/marketing URLs, and review notes. `Metadata Reviewer` checks grammar, product claims, stale trial copy, legal links, and consistency with the actual app behavior.
+- **Assets**: Operator uploads screenshots and app icon assets. `Asset Reviewer` checks screenshot counts/dimensions, removes stale screenshots, and verifies App Icon source images are full-bleed square with no pre-rounded corners, internal frame, or border.
+- **Subscription & Legal**: Operator checks product IDs, price copy, renewal copy, Privacy Policy, and Terms of Use. `Subscription Legal Reviewer` checks that trial/introductory-offer claims match App Store Connect and that required links are visible.
+- **AI & Privacy**: Operator writes AI-processing and privacy notes. `AI Privacy Reviewer` verifies owner-hosted/private AI claims, backend domains, data-retention claims, and confirms no third-party AI-service claim is made unless true.
+- **Store State & Submission**: Operator prepares `Add for Review`. `Store State Reviewer` verifies `Pricing and Availability` and sale/removal status were not changed unless explicitly requested.
+- **Release Captain**: combines all reviewer results. Operator may proceed to final `Submit for Review` only when every reviewer reports `PASS` or the user explicitly accepts a named risk.
+- If multi-agent tools are unavailable, simulate the split with separate passes in the same session. Reviewer passes must be read-only: no clicks, uploads, edits, availability changes, or submission.
+- Final `Submit for Review` still needs immediate user confirmation.
 
 ## Standard Workflow
 
@@ -73,7 +77,7 @@ Use this skill for App Store Connect release work: resubmissions, screenshot rep
 
 5. **Submit and verify**
    - Click `Add for Review` only after metadata, app icon, screenshots, selected build, legal links, and review notes are correct.
-   - Run the Release Reviewer pass after `Add for Review` but before final `Submit for Review`.
+   - Run all task-specific reviewer passes after `Add for Review` but before final `Submit for Review`.
    - Before clicking `Submit for Review`, ask for immediate confirmation: “最后一步会正式提交给 Apple 审核。请确认现在提交吗？”
    - After submission, verify status changes to `Waiting for Review` and capture the key facts: app, version, build, submission result, and any review submission link or ID shown.
 

@@ -11,11 +11,11 @@ It is designed for workflows that involve:
 - screenshot replacement
 - subscription copy review
 - App Review notes
-- separate operator/reviewer agent workflow
+- task-based operator/reviewer workflow
 - final `Submit for Review` safety checks
 - AI app review notes for owner-hosted/private model services
 
-The skill is intentionally cautious around App Store state changes. It separates release work from release review, and tells the agent not to touch `Pricing and Availability`, remove an app from sale, add it back to sale, change subscription price, or submit for review without action-time confirmation.
+The skill is intentionally cautious around App Store state changes. It splits release work into task lanes with separate reviewers, and tells the agent not to touch `Pricing and Availability`, remove an app from sale, add it back to sale, change subscription price, or submit for review without action-time confirmation.
 
 ## Install
 
@@ -35,7 +35,7 @@ Restart Codex or start a new session so the skill metadata is loaded.
 - Checking that App Icon assets are full-bleed square images with no pre-rounded corners, internal frame, or border. Xcode and iOS apply the rounded mask.
 - Replacing App Store screenshots while validating common required dimensions.
 - Filling App Review notes with privacy, legal, subscription, and AI-processing context.
-- Using a release operator agent for edits and a separate read-only reviewer agent for final QA.
+- Splitting work into task lanes with separate read-only reviewers for build, assets, subscription/legal, AI/privacy, store state, and final submission.
 - Requiring a final confirmation before `Submit for Review`.
 - Recording final status such as `Waiting for Review`.
 
